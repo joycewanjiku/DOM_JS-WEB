@@ -1,29 +1,25 @@
-// Create header element
-const header = document.createElement('header');
-header.classList.add('header');
-
-// Create navigation bar element
-const nav = document.createElement('nav');
-nav.classList.add('nav');
-
-// Create section elements
-const section1 = document.createElement('section');
-section1.classList.add('section1');
-
-const section2 = document.createElement('section');
-section2.classList.add('section2');
-
-const section3 = document.createElement('section');
-section3.classList.add('section3');
-
-// Create footer element
-const footer = document.createElement('footer');
-footer.classList.add('footer');
-
-// Append elements to the body of the webpage
-document.body.appendChild(header);
-document.body.appendChild(nav);
-document.body.appendChild(section1);
-document.body.appendChild(section2);
-document.body.appendChild(section3);
-document.body.appendChild(footer);
+function generateProductCards(data) {
+    const productContainer = document.getElementById("products");
+    data.forEach((product) => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+      card.innerHTML = `
+              <img class= "productImage" src="${product.thumbnail}" alt="${product.name}" />
+              <h2>${product.title}</h2>
+              <div class='productPrice'>
+              <p>${product.price}</p>
+              <button>ADD TO CART</button>
+              </div>
+          `;
+      productContainer.appendChild(card);
+    });
+  }
+  function fetchProducts() {
+    fetch("https://dummyjson.com/")
+      .then((response) => response.json())
+      .then((data) => {
+        const returnedData = data.products.slice(0, 10);
+        generateProductCards(returnedData);
+    });
+  }
+  fetchProducts()
